@@ -60,16 +60,24 @@ vector<Pokemon*> retrievePoke()
         pokeList.push_back(aNewPoke);
     }while(!inPokeList.eof());
 
+    inPokeList.close();
+
     return pokeList;
 }
 
 
 
 
-tuple<vector<Pokemon*>::iterator, bool> findPokemon(string aPokeName, vector<Pokemon*> aPokeList)
+tuple<Pokemon *, bool> findPokemon(string aPokeName)
 {
-    strToUpper(aPokeName);
     bool isFind = false;
+    strToUpper(aPokeName);
+
+    auto wantedPoke = indexPoke.find(aPokeName);
+    if(wantedPoke != indexPoke.end())
+        isFind = true;
+    return make_tuple(totalPokeList[wantedPoke->second-1], isFind);
+    /*
     vector<Pokemon*>::iterator it, it2;
     for (it=aPokeList.begin(); (it != aPokeList.end()) && !(isFind); it++ )
     {
@@ -81,6 +89,21 @@ tuple<vector<Pokemon*>::iterator, bool> findPokemon(string aPokeName, vector<Pok
     }
     if ((it == aPokeList.end()) && !isFind)
         cout << "This Pokemon do not exist !\n\n";
-    return make_tuple(it2, isFind);
+    return make_tuple(it2, isFind);*/
+
 }
 
+
+
+map<string, unsigned int> indexPokeList()
+{
+    int index = 1;
+    map<string, unsigned int> aTempIndex;
+    for (Pokemon *aPoke : totalPokeList)
+    {
+        aTempIndex.insert({aPoke->getItsName(),index});
+        index++;
+    }
+
+    return aTempIndex;
+}

@@ -8,8 +8,11 @@
 #include <vector>
 #include <iterator>
 #include <map>
+#include <utility>
 
 using namespace std;
+
+#define POKEDEXSIZE 151
 
 enum Type{WATER=0, FIRE=1, GRASS=2, ELECTRIC=3,
           NORMAL=4, FIGHTING=5, FLYING=6, POISON=7,

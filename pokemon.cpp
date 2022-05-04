@@ -77,6 +77,7 @@ void Pokemon::attack(Pokemon *aPokemon)
                 << "[" << typeToStr(itsType1) << "] or [" << typeToStr(itsType2) << "]\n";
 
             getline(cin, aTempStr);
+            strToUpper(aTempStr);
             indexError++;
 
         }while( (strToType(aTempStr) != itsType1) && (strToType(aTempStr) != itsType2) );
@@ -107,7 +108,7 @@ void Pokemon::attack(Pokemon *aPokemon)
         effectivSpeach = "not very effective";
 
     cout << itsName << " deal " << aTotalDamage << " to " << aPokemon->getItsName() << "\tHP: " << aPokemon->getItsHP() << "/" << aPokemon->getItsTotalHP() << endl
-         << "It's " << effectivSpeach << endl;
+             << "It's " << effectivSpeach << endl;
 
     if(!aPokemon->isAlive())
     {

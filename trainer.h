@@ -5,7 +5,6 @@
 #include <iterator>
 
 #include "functionsPoke.h"
-#include "pokemon.h"
 
 class Trainer
 {
@@ -13,10 +12,14 @@ private:
     string itsName;
     vector<Pokemon*> *itsPokemonTeam;
 public:
-    Trainer(const string &itsName, vector<Pokemon *> *itsPokemonTeam);
+    Trainer(const string &itsName);
 
     void addPokemon(Pokemon *aPokemon);
     void rmPokemon(Pokemon *aPokemon);
+    void createTeam();
+    void save();
+    tuple< vector<Pokemon*>::iterator, bool> findPokemonTeam(string aPokeName);
+
 
 };
 

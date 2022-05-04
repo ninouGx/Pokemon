@@ -39,6 +39,15 @@ public:
     const string &getItsName() const;
     int getItsHP() const;
     int getItsTotalHP() const;
+
+    //nom pv force defence vitesse type1 type2
+    friend ostream &operator << (ostream &os, const Pokemon &aPoke)
+    {
+        return os << "\nName:   " << aPoke.itsName
+                  << "\nHealth: " << aPoke.itsHP <<               "\tSpeed:   " << aPoke.itsSpeed
+                  << "\nAttack: " << aPoke.itsAttack <<           "\tDefense: " << aPoke.itsDefense
+                  << "\nType1:  " << typeToStr(aPoke.itsType1) << "\tType2:   " << typeToStr(aPoke.itsType2) << endl;
+    }
 };
 
 

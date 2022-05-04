@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         functions.cpp \
         functionsPoke.cpp \
+        functionsTrainer.cpp \
         main.cpp \
         pokemon.cpp \
         trainer.cpp
@@ -13,5 +14,6 @@ SOURCES += \
 HEADERS += \
     functions.h \
     functionsPoke.h \
+    functionsTrainer.h \
     pokemon.h \
     trainer.h
