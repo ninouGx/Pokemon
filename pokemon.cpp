@@ -43,6 +43,22 @@ int Pokemon::getItsTotalHP() const
     return itsTotalHP;
 }
 
+void Pokemon::healPoke()
+{
+    setItsHP(itsTotalHP);
+}
+
+Pokemon* Pokemon::copyPokemon()
+{
+    Pokemon *aNewPoke = new Pokemon(*this);
+    return aNewPoke;
+}
+
+void Pokemon::setItsHP(int newItsHP)
+{
+    itsHP = newItsHP;
+}
+
 Pokemon::Pokemon(const string &itsName, float itsSize, float itsWeight, int itsHP, int itsAttack, int itsDefense, float itsSpeed, Type itsType1, Type itsType2, int itsCP) : itsName(itsName),
     itsSize(itsSize),
     itsWeight(itsWeight),
@@ -92,7 +108,9 @@ void Pokemon::attack(Pokemon *aPokemon)
     //attack formula :     //(itsCP * itsAttack / opposite pokemon defence)  * effectiveness
 
     effectiveness = typeTable(aTempType, aPokemon->itsType1, aPokemon->itsType2);
+
     aTotalDamage = (itsCP * itsAttack / aPokemon->itsDefense) * effectiveness;
+
     aPokemon->tank(aTotalDamage);
 
     if(effectiveness >= 2)
@@ -107,7 +125,7 @@ void Pokemon::attack(Pokemon *aPokemon)
     else
         effectivSpeach = "not very effective";
 
-    cout << itsName << " deal " << aTotalDamage << " to " << aPokemon->getItsName() << "\tHP: " << aPokemon->getItsHP() << "/" << aPokemon->getItsTotalHP() << endl
+    cout << itsName << " deal "  << aTotalDamage << " " << typeToStr(aTempType) << " damage to " << aPokemon->getItsName() << "\tHP: " << aPokemon->getItsHP() << "/" << aPokemon->getItsTotalHP() << endl
              << "It's " << effectivSpeach << endl;
 
     if(!aPokemon->isAlive())
@@ -117,7 +135,7 @@ void Pokemon::attack(Pokemon *aPokemon)
 
 }
 
-float typeTable(Type attackType, Type defType1, Type defType2)
+float Pokemon::typeTable(Type attackType, Type defType1, Type defType2)
 {
     float factor = 1.0 ; // Initialisation du multiplicateur de dégâts
         switch (attackType)    // Gestion des cas en fonction du type de la capacité

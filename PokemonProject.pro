@@ -4,16 +4,18 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        ai.cpp \
         functions.cpp \
         functionsPoke.cpp \
-        functionsTrainer.cpp \
+        gameloop.cpp \
         main.cpp \
         pokemon.cpp \
         trainer.cpp
 
 HEADERS += \
+    ai.h \
     functions.h \
     functionsPoke.h \
-    functionsTrainer.h \
+    gameloop.h \
     pokemon.h \
     trainer.h

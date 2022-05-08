@@ -3,9 +3,10 @@
 
 #include "functions.h"
 
+#define POKEDEXSIZE 151
+#define TEAMSIZE 6
 
 
-float typeTable(Type attackType, Type defType1, Type defType2);
 
 class Pokemon
 {
@@ -30,15 +31,27 @@ protected:
 
 public:
     Pokemon(const string &itsName, float itsSize, float itsWeight, int itsHP, int itsAttack, int itsDefense, float itsSpeed, Type itsType1, Type itsType2, int itsCP = 50);
-    /*virtual */void attack(Pokemon *aPokemon)/*=0*/;
+    float typeTable(Type attackType, Type defType1, Type defType2);
+    void attack(Pokemon *aPokemon);
     void tank(int aNbDamage);
+    void healPoke();
     bool isAlive();
+
     float getItsSpeed() const;
+
     Type getItsType() const;
     Type getItsType2() const;
+
     const string &getItsName() const;
+
     int getItsHP() const;
+    void setItsHP(int newItsHP);
+
     int getItsTotalHP() const;
+
+
+
+    Pokemon* copyPokemon(); //copy a Pokemon from the general vector to have a unique pokemon each time (team of a single kind of pokemon)
 
     //nom pv force defence vitesse type1 type2
     friend ostream &operator << (ostream &os, const Pokemon &aPoke)
@@ -48,6 +61,7 @@ public:
                   << "\nAttack: " << aPoke.itsAttack <<           "\tDefense: " << aPoke.itsDefense
                   << "\nType1:  " << typeToStr(aPoke.itsType1) << "\tType2:   " << typeToStr(aPoke.itsType2) << endl;
     }
+
 };
 
 

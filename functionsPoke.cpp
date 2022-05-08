@@ -9,7 +9,7 @@ vector<Pokemon*> retrievePoke()
 {
 
     vector<Pokemon*> pokeList;
-    ifstream inPokeList("../MiniProjNoms/fichierModifPoke/listFinalP.txt");
+    ifstream inPokeList("../../MiniProjNoms/pokeData/listFinalP.txt");
     string aName,
             anHP,
             anAttack,
@@ -38,6 +38,8 @@ vector<Pokemon*> retrievePoke()
         getline(inPokeList, aType2);
 
         //conversion des types string en TYPE
+        //aType1.pop_back();
+        //aType2.pop_back();
         theType1 = strToType(aType1);
         theType2 = strToType(aType2);
 
@@ -70,13 +72,26 @@ vector<Pokemon*> retrievePoke()
 
 tuple<Pokemon *, bool> findPokemon(string aPokeName)
 {
+    tuple<Pokemon *, bool> finalTuple;
     bool isFind = false;
     strToUpper(aPokeName);
 
     auto wantedPoke = indexPoke.find(aPokeName);
     if(wantedPoke != indexPoke.end())
+    {
         isFind = true;
-    return make_tuple(totalPokeList[wantedPoke->second-1], isFind);
+        finalTuple = make_tuple(totalPokeList[wantedPoke->second-1], isFind);
+    }
+    else
+    {
+        finalTuple = make_tuple(nullptr, isFind);
+    }
+
+    return finalTuple;
+
+
+
+
     /*
     vector<Pokemon*>::iterator it, it2;
     for (it=aPokeList.begin(); (it != aPokeList.end()) && !(isFind); it++ )
