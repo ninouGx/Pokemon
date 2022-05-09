@@ -108,12 +108,12 @@ void losingTrainer(Trainer *aTrainer, Trainer *aTrainer2)
     if ( aTrainer->isTeamKO()){
         cout << aTrainer->getItsName() << " is out of usable Pokemon!\n"
              << aTrainer2->getItsName() << " has won!";
-        aTrainer->healTeam();
+        //aTrainer->healTeam();
     }
     else{
         cout << aTrainer2->getItsName() << " is out of usable Pokemon!\n"
              << aTrainer->getItsName() << " has won!";
-        aTrainer2->healTeam();
+        //aTrainer2->healTeam();
     }
 }
 
@@ -146,6 +146,6 @@ void hasFaintedPoke(Pokemon *aPoke, Trainer *aTrainer)
 
         cout << aTrainer->getItsName() << "!" << endl
              << aPoke->getItsName() << " is KO, you have to change!\n\n";
-        aPoke = battleTurn(aTrainer);
+        aTrainer->setItsActivePokemon(battleTurn(aTrainer));
     }
 }

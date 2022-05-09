@@ -29,17 +29,23 @@ int main()
     cout << "Player 2:\n";
     aTrainer2 = bootMenu();
 
-    aPoke = aTrainer->getItsActivePokemon();
-    aPoke2 = aTrainer2->getItsActivePokemon();
     do
     {
+        aPoke = aTrainer->getItsActivePokemon();
+        aPoke2 = aTrainer2->getItsActivePokemon();
+
         //if a pokemon has fainted in the last turn and to make sure each trainer using a pokemon with some hp left
         hasFaintedPoke(aPoke, aTrainer);
         hasFaintedPoke(aPoke2, aTrainer2);
         do
         {
+
+
             battleMenu(aTrainer);
             battleMenu(aTrainer2);
+
+            aPoke = aTrainer->getItsActivePokemon();
+            aPoke2 = aTrainer2->getItsActivePokemon();
 
             firstPokeToAttack(aPoke, aPoke2);
 
