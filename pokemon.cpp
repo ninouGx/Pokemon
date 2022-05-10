@@ -59,21 +59,6 @@ void Pokemon::setItsHP(int newItsHP)
     itsHP = newItsHP;
 }
 
-int Pokemon::getItsCP() const
-{
-    return itsCP;
-}
-
-int Pokemon::getItsAttack() const
-{
-    return itsAttack;
-}
-
-int Pokemon::getItsDefense() const
-{
-    return itsDefense;
-}
-
 Pokemon::Pokemon(const string &itsName, float itsSize, float itsWeight, int itsHP, int itsAttack, int itsDefense, float itsSpeed, Type itsType1, Type itsType2, int itsCP) : itsName(itsName),
     itsSize(itsSize),
     itsWeight(itsWeight),
