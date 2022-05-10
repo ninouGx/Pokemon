@@ -1,5 +1,30 @@
 #include "gameloop.h"
 
+int versusMenu()
+{
+    int finalValue;
+    string bootChoice;
+    do
+    {
+        cout << "[1V1]\n[1AI]\n[2AI]\n";
+        getline(cin, bootChoice);
+        strToUpper(bootChoice);
+    }while ( (bootChoice != "1V1") && (bootChoice != "1AI") &&  (bootChoice != "2AI") );
+
+    if(bootChoice == "1v1"){
+        finalValue = 0;
+    }
+    else if (bootChoice == "1AI"){
+        finalValue = 1;
+    }
+    else{
+        finalValue = 2;
+    }
+    clearScreen();
+    return finalValue;
+}
+
+
 Trainer *bootMenu()
 {
     string bootChoice, aTrainerName;
@@ -103,6 +128,239 @@ void clearScreen()
     #endif
 }
 
+
+
+void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
+{
+    Pokemon *aPoke = aTrainer->getItsActivePokemon(),
+            *aPoke2 = aTrainer2->getItsActivePokemon();
+
+    if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
+    {
+        cout << aTrainer->getItsName() << "!\n";
+        aPoke->attack(aPoke2);
+
+
+        if(aPoke2->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer2->getItsName() << "!\n";
+            aPoke2->attack(aPoke);
+        }
+    }
+    else
+    {
+        cout << aTrainer2->getItsName() << "!\n";
+        aPoke2->attack(aPoke);
+
+        if(aPoke->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer->getItsName() << "!\n";
+            aPoke->attack(aPoke2);
+        }
+    }
+}
+
+void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
+{
+    Pokemon *aPoke = aTrainer->getItsActivePokemon(),
+            *aPoke2 = aTrainer2->getItsActivePokemon();
+    if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
+    {
+        cout << aTrainer->getItsName() << "!\n";
+        aPoke->attack(aPoke2);
+
+        if(aPoke2->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer2->getItsName() << "!\n";
+            aTrainer2->AIattack();
+        }
+    }
+    else
+    {
+        cout << aTrainer2->getItsName() << "!\n";
+        aTrainer2->AIattack();
+
+        if(aPoke->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer->getItsName() << "!\n";
+            aPoke->attack(aPoke2);
+
+        }
+    }
+}
+
+
+void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
+{
+    Pokemon *aPoke = aTrainer->getItsActivePokemon(),
+            *aPoke2 = aTrainer2->getItsActivePokemon();
+
+    if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
+    {
+        cout << aTrainer->getItsName() << "!\n";
+        aTrainer->AIattack();
+
+        if(aPoke2->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer2->getItsName() << "!\n";
+            aTrainer2->AIattack();
+        }
+        cin.ignore();
+    }
+    else
+    {
+        cout << aTrainer2->getItsName() << "!\n";
+        aTrainer2->AIattack();
+
+        if(aPoke->isAlive())
+        {
+            clearScreen();
+            cout << aTrainer->getItsName() << "!\n";
+            aTrainer->AIattack();
+
+        }
+        cin.ignore();
+    }
+}
+
+
+
+void hasFaintedPoke(Pokemon *aPoke, Trainer *aTrainer)
+{
+    if(!aPoke->isAlive())
+    {
+
+        cout << aTrainer->getItsName() << "!" << endl
+             << aPoke->getItsName() << " is KO, you have to change!\n\n";
+        aTrainer->setItsActivePokemon(battleTurn(aTrainer));
+    }
+}
+
+void battleSequence(Trainer *aTrainer, Trainer *aTrainer2)
+{
+    Pokemon *aPoke = new Pokemon("test",1,1,1,1,1,1, NONE, NONE),
+            *aPoke2 = new Pokemon("test",1,1,1,1,1,1, NONE, NONE);
+    do
+    {
+        aPoke = aTrainer->getItsActivePokemon();
+        aPoke2 = aTrainer2->getItsActivePokemon();
+
+        //if a pokemon has fainted in the last turn and to make sure each trainer using a pokemon with some hp left
+        hasFaintedPoke(aPoke, aTrainer);
+        hasFaintedPoke(aPoke2, aTrainer2);
+        do
+        {
+
+
+            battleMenu(aTrainer);
+            battleMenu(aTrainer2);
+
+            aPoke = aTrainer->getItsActivePokemon();
+            aPoke2 = aTrainer2->getItsActivePokemon();
+
+            firstPokeToAttack(aTrainer, aTrainer2);
+
+            cin.ignore();
+        }while(aPoke->isAlive() && aPoke2->isAlive());
+
+    }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
+
+    losingTrainer(aTrainer, aTrainer2);
+
+    aPoke->setItsHP(1);
+
+    delete aPoke;
+    delete aPoke2;
+}
+
+void battleSequence1AI(Trainer *aTrainer, AI *aTrainer2)
+{
+    Pokemon *aPoke = new Pokemon("test",1,1,1,1,1,1, NONE, NONE),
+            *aPoke2 = new Pokemon("test",1,1,1,1,1,1, NONE, NONE);
+    do
+    {
+        aPoke = aTrainer->getItsActivePokemon();
+        aPoke2 = aTrainer2->getItsActivePokemon();
+
+        //if a pokemon has fainted in the last turn and to make sure each trainer using a pokemon with some hp left
+        hasFaintedPoke(aPoke, aTrainer);
+        if (!aPoke2->isAlive()){
+            aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
+        }
+        cout << "[" << aTrainer2->getItsActivePokemon()->getItsName() << "]" << endl;
+        do
+        {
+
+
+            battleMenu(aTrainer);
+            //aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
+
+
+            aPoke = aTrainer->getItsActivePokemon();
+            aPoke2 = aTrainer2->getItsActivePokemon();
+
+            firstPokeToAttack1AI(aTrainer, aTrainer2);
+
+            cin.ignore();
+        }while(aPoke->isAlive() && aPoke2->isAlive());
+
+    }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
+
+    losingTrainer(aTrainer, aTrainer2);
+
+    aPoke->setItsHP(1);
+
+    delete aPoke;
+    delete aPoke2;
+}
+
+void battleSequence2AI(AI *aTrainer, AI *aTrainer2)
+{
+    Pokemon *aPoke = new Pokemon("test",1,1,1,1,1,1, NONE, NONE),
+            *aPoke2 = new Pokemon("test",1,1,1,1,1,1, NONE, NONE);
+    do
+    {
+        aPoke = aTrainer->getItsActivePokemon();
+        aPoke2 = aTrainer2->getItsActivePokemon();
+
+        //if a pokemon has fainted in the last turn and to make sure each trainer using a pokemon with some hp left
+        if (!aPoke->isAlive()){
+            aTrainer->setItsActivePokemon(aTrainer->bestPokemon());
+        }
+        if (!aPoke2->isAlive()){
+            aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
+        }
+
+        do
+        {
+
+            //aTrainer->setItsActivePokemon(aTrainer->bestPokemon());
+            //aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
+
+            aPoke = aTrainer->getItsActivePokemon();
+            aPoke2 = aTrainer2->getItsActivePokemon();
+
+            firstPokeToAttack2AI(aTrainer, aTrainer2);
+
+
+        }while(aPoke->isAlive() && aPoke2->isAlive());
+
+    }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
+
+    losingTrainer(aTrainer, aTrainer2);
+
+    aPoke->setItsHP(1);
+
+    delete aPoke;
+    delete aPoke2;
+}
+
+
 void losingTrainer(Trainer *aTrainer, Trainer *aTrainer2)
 {
     if ( aTrainer->isTeamKO()){
@@ -118,34 +376,3 @@ void losingTrainer(Trainer *aTrainer, Trainer *aTrainer2)
 }
 
 
-void firstPokeToAttack(Pokemon *aPoke, Pokemon *aPoke2)
-{
-    if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
-    {
-        aPoke->attack(aPoke2);
-        if(aPoke2->isAlive())
-        {
-            aPoke2->attack(aPoke);
-        }
-    }
-    else
-    {
-        aPoke2->attack(aPoke);
-        if(aPoke->isAlive())
-        {
-            aPoke->attack(aPoke2);
-        }
-    }
-}
-
-
-void hasFaintedPoke(Pokemon *aPoke, Trainer *aTrainer)
-{
-    if(!aPoke->isAlive())
-    {
-
-        cout << aTrainer->getItsName() << "!" << endl
-             << aPoke->getItsName() << " is KO, you have to change!\n\n";
-        aTrainer->setItsActivePokemon(battleTurn(aTrainer));
-    }
-}

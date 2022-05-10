@@ -14,7 +14,9 @@ public:
     Type bestMove(Pokemon *attackPokemon);  //return the best multiplier of the pokemon over the opponent pokemon
     Pokemon* bestPokemon(); //si un pokemon qui permet de faire plus de degats sinon un pokemon qui peut mieux tanker et pas de changement sinon
 
+
     void setItsOpponent(Trainer *newItsOpponent);
+    Trainer *getItsOpponent() const;
 };
 
 #endif // AI_H

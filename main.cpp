@@ -13,60 +13,45 @@ int main()
 {
     srand(time(0));
 
-    string aPokeName, aPokeName2, aTrainerName, bootChoice;
-
-    Pokemon *aPoke = new Pokemon("test",1,1,1,1,1,1, NONE, NONE),
-            *aPoke2 = new Pokemon("test",1,1,1,1,1,1, NONE, NONE);
+    string aTrainerName = "tempName";
 
     Trainer *aTrainer = new Trainer(aTrainerName),
             *aTrainer2 = new Trainer(aTrainerName);
 
-    AI anAI("testAI");
+    AI *firstAI = new AI("AI1"),
+            *secndAI = new AI("AI2");
 
-    cout << "Player 1:\n";
-    aTrainer = bootMenu();
-    //cout << aTrainer->isTeamKO() << endl;
-    cout << "Player 2:\n";
-    aTrainer2 = bootMenu();
+    switch (versusMenu()) {
+    case 0:     cout << "Player 1:\n";
+            aTrainer = bootMenu();
+            cout << "Player 2:\n";
+            aTrainer2 = bootMenu();
 
-    do
-    {
-        aPoke = aTrainer->getItsActivePokemon();
-        aPoke2 = aTrainer2->getItsActivePokemon();
+            battleSequence(aTrainer, aTrainer2);
+        break;
 
-        //if a pokemon has fainted in the last turn and to make sure each trainer using a pokemon with some hp left
-        hasFaintedPoke(aPoke, aTrainer);
-        hasFaintedPoke(aPoke2, aTrainer2);
-        do
-        {
+    case 1: cout << "Player 1:\n";
+            aTrainer = bootMenu();
+            firstAI->setItsOpponent(aTrainer);
 
+            battleSequence1AI(aTrainer, firstAI);
+        break;
 
-            battleMenu(aTrainer);
-            battleMenu(aTrainer2);
+    case 2: firstAI->setItsOpponent(secndAI);
+            secndAI->setItsOpponent(firstAI);
 
-            aPoke = aTrainer->getItsActivePokemon();
-            aPoke2 = aTrainer2->getItsActivePokemon();
+        battleSequence2AI(firstAI, secndAI);
+        break;
 
-            firstPokeToAttack(aPoke, aPoke2);
-
-            cin.ignore();
-        }while(aPoke->isAlive() && aPoke2->isAlive());
-
-    }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
-
-    losingTrainer(aTrainer, aTrainer2);
-
-    aPoke->setItsHP(1);
+    };
 
     aTrainer->save();
     aTrainer2->save();
 
-    delete aPoke;
-    delete aPoke2;
     delete aTrainer;
     delete aTrainer2;
 
-    cout << "\n";
+    cout << "\n\n";
     return 0;
 }
 
