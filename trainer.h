@@ -13,6 +13,7 @@ protected:
     string itsName;
     vector<Pokemon*> *itsPokemonTeam;
     Pokemon *itsActivePokemon = nullptr; //the pokemon who's fighting
+    bool alreadyFightSwap = false;
 
 public:
     Trainer(const string &itsName);
@@ -31,6 +32,8 @@ public:
     Pokemon *getItsActivePokemon() const;
     void setItsActivePokemon(Pokemon *newItsActivePokemon);
     const string &getItsName() const;
+    bool getAlreadyFightSwap() const;
+    void setAlreadyFightSwap(bool newAlreadyFightSwap);
 };
 
 #endif // TRAINER_H

@@ -11,7 +11,7 @@ int versusMenu()
         strToUpper(bootChoice);
     }while ( (bootChoice != "1V1") && (bootChoice != "1AI") &&  (bootChoice != "2AI") );
 
-    if(bootChoice == "1v1"){
+    if(bootChoice == "1V1"){
         finalValue = 0;
     }
     else if (bootChoice == "1AI"){
@@ -68,6 +68,7 @@ void battleMenu(Trainer *aTrainer)
 {
 
     string inputChoice;
+    Pokemon *tempPoke = aTrainer->getItsActivePokemon();
 
     cout << aTrainer->getItsName() << "!" << endl;
     do
@@ -80,7 +81,11 @@ void battleMenu(Trainer *aTrainer)
     if (inputChoice == "team")
     {
         aTrainer->setItsActivePokemon(battleTurn(aTrainer));
-        battleMenu(aTrainer);
+        if(aTrainer->getItsActivePokemon() != tempPoke){
+            aTrainer->setAlreadyFightSwap(true);
+        }
+
+        //battleMenu(aTrainer);
     }
     clearScreen();
 }
@@ -101,6 +106,7 @@ Pokemon *battleTurn(Trainer *aTrainer)
         getline(cin,aPokeName);
         cout << "\n";
 
+        //if the pokemon exist in team and is not alive
         if ( get<1>(aTrainer->findPokemonTeam(aPokeName)) && !((*get<0>(aTrainer->findPokemonTeam(aPokeName)))->isAlive()))
         {
             aPoke = *get<0>(aTrainer->findPokemonTeam(aPokeName));
@@ -137,27 +143,46 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
 
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
-        cout << aTrainer->getItsName() << "!\n";
-        aPoke->attack(aPoke2);
+        if (!aTrainer->getAlreadyFightSwap()){
+            cout << aTrainer->getItsName() << "!\n";
+            aPoke->attack(aPoke2);
 
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
+        }
 
         if(aPoke2->isAlive())
         {
-            clearScreen();
-            cout << aTrainer2->getItsName() << "!\n";
-            aPoke2->attack(aPoke);
+            if(!aTrainer2->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer2->getItsName() << "!\n";
+                aPoke2->attack(aPoke);
+
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
         }
     }
     else
     {
-        cout << aTrainer2->getItsName() << "!\n";
-        aPoke2->attack(aPoke);
+        if(!aTrainer2->getAlreadyFightSwap()){
+            cout << aTrainer2->getItsName() << "!\n";
+            aPoke2->attack(aPoke);
+
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
+        }
 
         if(aPoke->isAlive())
         {
-            clearScreen();
-            cout << aTrainer->getItsName() << "!\n";
-            aPoke->attack(aPoke2);
+            if (!aTrainer->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer->getItsName() << "!\n";
+                aPoke->attack(aPoke2);
+
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
         }
     }
 }
@@ -166,29 +191,49 @@ void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
 {
     Pokemon *aPoke = aTrainer->getItsActivePokemon(),
             *aPoke2 = aTrainer2->getItsActivePokemon();
+
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
-        cout << aTrainer->getItsName() << "!\n";
-        aPoke->attack(aPoke2);
+        if (!aTrainer->getAlreadyFightSwap()){
+            cout << aTrainer->getItsName() << "!\n";
+            aPoke->attack(aPoke2);
+
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
+        }
 
         if(aPoke2->isAlive())
         {
-            clearScreen();
-            cout << aTrainer2->getItsName() << "!\n";
-            aTrainer2->AIattack();
+            if(!aTrainer2->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer2->getItsName() << "!\n";
+                aTrainer2->AIattack();
+
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
         }
     }
     else
     {
-        cout << aTrainer2->getItsName() << "!\n";
-        aTrainer2->AIattack();
+        if(!aTrainer2->getAlreadyFightSwap()){
+            cout << aTrainer2->getItsName() << "!\n";
+            aTrainer2->AIattack();
+
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
+        }
 
         if(aPoke->isAlive())
         {
-            clearScreen();
-            cout << aTrainer->getItsName() << "!\n";
-            aPoke->attack(aPoke2);
+            if (!aTrainer->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer->getItsName() << "!\n";
+                aPoke->attack(aPoke2);
 
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
         }
     }
 }
@@ -201,30 +246,47 @@ void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
 
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
-        cout << aTrainer->getItsName() << "!\n";
-        aTrainer->AIattack();
-
-        if(aPoke2->isAlive())
-        {
-            clearScreen();
-            cout << aTrainer2->getItsName() << "!\n";
-            aTrainer2->AIattack();
-        }
-        cin.ignore();
-    }
-    else
-    {
-        cout << aTrainer2->getItsName() << "!\n";
-        aTrainer2->AIattack();
-
-        if(aPoke->isAlive())
-        {
-            clearScreen();
+        if (!aTrainer->getAlreadyFightSwap()){
             cout << aTrainer->getItsName() << "!\n";
             aTrainer->AIattack();
 
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
         }
-        cin.ignore();
+
+        if(aPoke2->isAlive())
+        {
+            if(!aTrainer2->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer2->getItsName() << "!\n";
+                aTrainer2->AIattack();
+
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
+        }
+    }
+    else
+    {
+        if(!aTrainer2->getAlreadyFightSwap()){
+            cout << aTrainer2->getItsName() << "!\n";
+            aTrainer2->AIattack();
+
+            cout << "\nPress Enter to continue!\n";
+            cin.ignore();
+        }
+
+        if(aPoke->isAlive())
+        {
+            if (!aTrainer->getAlreadyFightSwap()){
+                clearScreen();
+                cout << aTrainer->getItsName() << "!\n";
+                aTrainer->AIattack();
+
+                cout << "\nPress Enter to continue!\n";
+                cin.ignore();
+            }
+        }
     }
 }
 
@@ -256,7 +318,8 @@ void battleSequence(Trainer *aTrainer, Trainer *aTrainer2)
         do
         {
 
-
+            aTrainer->setAlreadyFightSwap(false);
+            aTrainer2->setAlreadyFightSwap(false);
             battleMenu(aTrainer);
             battleMenu(aTrainer2);
 
@@ -265,7 +328,9 @@ void battleSequence(Trainer *aTrainer, Trainer *aTrainer2)
 
             firstPokeToAttack(aTrainer, aTrainer2);
 
-            cin.ignore();
+            //cout << "\nPress Enter to continue!\n";
+            //cin.ignore();
+            clearScreen();
         }while(aPoke->isAlive() && aPoke2->isAlive());
 
     }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
@@ -292,11 +357,15 @@ void battleSequence1AI(Trainer *aTrainer, AI *aTrainer2)
         if (!aPoke2->isAlive()){
             aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
         }
-        cout << "[" << aTrainer2->getItsActivePokemon()->getItsName() << "]" << endl;
+        cout << "[" << aTrainer->getItsActivePokemon()->getItsName() << "] vs [" << aTrainer2->getItsActivePokemon()->getItsName() << "]\n";
+        clearScreen();
+        //cout << "[" << aTrainer2->getItsActivePokemon()->getItsName() << "]" << endl;
         do
         {
+            aTrainer->setAlreadyFightSwap(false);
+            aTrainer2->setAlreadyFightSwap(false);
 
-
+            cout << "[" << aTrainer->getItsActivePokemon()->getItsName() << "] vs [" << aTrainer2->getItsActivePokemon()->getItsName() << "]\n";
             battleMenu(aTrainer);
             //aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
 
@@ -306,7 +375,6 @@ void battleSequence1AI(Trainer *aTrainer, AI *aTrainer2)
 
             firstPokeToAttack1AI(aTrainer, aTrainer2);
 
-            cin.ignore();
         }while(aPoke->isAlive() && aPoke2->isAlive());
 
     }while(!aTrainer->isTeamKO() && !aTrainer2->isTeamKO());
