@@ -37,10 +37,6 @@ public:
     void healPoke();
     bool isAlive();
 
-    int getItsCP() const;
-    int getItsAttack() const;
-    int getItsDefense() const;
-
     float getItsSpeed() const;
 
     Type getItsType() const;
@@ -65,7 +61,6 @@ public:
                   << "\nAttack: " << aPoke.itsAttack <<           "\tDefense: " << aPoke.itsDefense
                   << "\nType1:  " << typeToStr(aPoke.itsType1) << "\tType2:   " << typeToStr(aPoke.itsType2) << endl;
     }
-
 
 };
 
