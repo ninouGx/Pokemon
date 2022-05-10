@@ -188,6 +188,16 @@ const string &Trainer::getItsName() const
     return itsName;
 }
 
+bool Trainer::getAlreadyFightSwap() const
+{
+    return alreadyFightSwap;
+}
+
+void Trainer::setAlreadyFightSwap(bool newAlreadyFightSwap)
+{
+    alreadyFightSwap = newAlreadyFightSwap;
+}
+
 Trainer::Trainer(const string &itsName) : itsName(itsName)
 {
     vector<Pokemon *> *aTeam = new  vector<Pokemon *>;
