@@ -118,3 +118,9 @@ Type strToType(string aStrType)
     return finalType;
 }
 
+
+void nbBlank(int nb)
+{
+    for(int i=0; i<nb; i++)
+        cout << " ";
+}

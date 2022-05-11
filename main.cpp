@@ -2,6 +2,9 @@
 #include <vector>
 #include <ctime>
 #include <algorithm>
+#include <stdio.h>
+
+#pragma comment(lib, "user32")
 //#include <filesystem> //Afin d'indexer les fichiers d'un dossier     https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
 
 #include "gameloop.h"
@@ -12,6 +15,22 @@ using namespace std;
 int main()
 {
     srand(time(0));
+    system("mode 200");
+    clearScreen();
+    cout << "\n                                   .::.\n"
+            "                                  .;:**'\n"
+            "                                   `\n"
+            "     .:XHHHHk.              db.   .;;.     dH  MX   \n"
+            "   oMMMMMMMMMMM       ~MM  dMMP :MMMMMR   MMM  MR      ~MRMN\n"
+            "   QMMMMMb  \"MMX       MMMMMMP !MX' :M~   MMM MMM  .oo. XMMM 'MMM\n"
+            "     `MMMM.  )M> :X!Hk. MMMM   XMM.o\"  .  MMMMMMM X?XMMM MMM>!MMP\n"
+            "      'MMMb.dM! XM M'?M MMMMMX.`MMMMMMMM~ MM MMM XM `\" MX MMXXMM\n"
+            "       ~MMMMM~ XMM. .XM XM`\"MMMb.~*?**~ .MMX M t MMbooMM XMMMMMP\n"
+            "        ?MMM>  YMMMMMM! MM   `?MMRb.    `\"\"\"   !L\"MMMMM XM IMMM\n"
+            "         MMMX   \"MMMM\"  MM       ~%:           !Mh.\"\"\" dMI IMMP\n"
+            "         'MMM.                                             IMX\n"
+            "          ~M!M                                             IMP\n";
+
 
     string aTrainerName = "tempName";
 
@@ -20,6 +39,8 @@ int main()
 
     AI *firstAI = new AI("AI1"),
             *secndAI = new AI("AI2");
+    //for(int i=1; i<=151; i++)
+        //print_pokemon(i);
 
     switch (versusMenu()) {
     case 0:     cout << "Player 1:\n";
@@ -48,8 +69,20 @@ int main()
     aTrainer->save();
     aTrainer2->save();
 
+    cout <<"\n\n_____/\\\\\\\\\\\\\\\\\\\\\\\\_____/\\\\\\\\\\\\\\\\\\\\\\\\_\n"
+            " ___/\\\\\\//////////____/\\\\\\//////////__ \n"
+            "  __/\\\\\\______________/\\\\\\_____________ \n"
+            "   _\\/\\\\\\____/\\\\\\\\\\\\\\_\\/\\\\\\____/\\\\\\\\\\\\\\_ \n"
+            "    _\\/\\\\\\___\\/////\\\\\\_\\/\\\\\\___\\/////\\\\\\_ \n"
+            "     _\\/\\\\\\_______\\/\\\\\\_\\/\\\\\\_______\\/\\\\\\_ \n"
+            "      _\\/\\\\\\_______\\/\\\\\\_\\/\\\\\\_______\\/\\\\\\_ \n"
+            "       _\\//\\\\\\\\\\\\\\\\\\\\\\\\/__\\//\\\\\\\\\\\\\\\\\\\\\\\\/__ \n"
+            "        __\\////////////_____\\////////////____ \n\n";
+
     delete aTrainer;
     delete aTrainer2;
+    delete firstAI;
+    delete secndAI;
 
     cout << "\n\n";
     return 0;

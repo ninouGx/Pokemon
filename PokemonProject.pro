@@ -10,6 +10,7 @@ SOURCES += \
         gameloop.cpp \
         main.cpp \
         pokemon.cpp \
+        pokemon_ascii.cpp \
         trainer.cpp
 
 HEADERS += \
@@ -18,4 +19,5 @@ HEADERS += \
     functionsPoke.h \
     gameloop.h \
     pokemon.h \
+    pokemon_ascii.h \
     trainer.h

@@ -61,6 +61,9 @@ void AI::AIattack()
     {
         cout << "\nThe foe's " << defender->getItsName() << " fainted! \n";
     }
+
+
+
 }
 
 Type AI::bestMove(Pokemon *attackPokemon)

@@ -1,6 +1,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+
+#include "pokemon_ascii.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -22,6 +24,8 @@ enum Type{WATER=0, FIRE=1, GRASS=2, ELECTRIC=3,
           DARK=16, FAIRY=17, NONE=18};
 
 void strToUpper(string &aString);
+
+void nbBlank(int nb);
 
 string typeToStr(Type aType);
 

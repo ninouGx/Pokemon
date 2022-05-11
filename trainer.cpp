@@ -83,7 +83,7 @@ void Trainer::save()
 
 void Trainer::displayTeam()
 {
-    cout << "Your Team: ";
+    cout << itsName << " Team: ";
     for(Pokemon* aPoke : *itsPokemonTeam)
     {
         cout << "[" << aPoke->getItsName() << "  " << aPoke->getItsHP() << "/" << aPoke->getItsTotalHP() << "]   ";

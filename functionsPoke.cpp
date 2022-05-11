@@ -37,9 +37,13 @@ vector<Pokemon*> retrievePoke()
         getline(inPokeList, aType1);
         getline(inPokeList, aType2);
 
+        #ifdef __APPLE__
+            aName.pop_back();
         //conversion des types string en TYPE
-        //aType1.pop_back();
-        //aType2.pop_back();
+            aType1.pop_back();
+            aType2.pop_back();
+        #endif
+
         theType1 = strToType(aType1);
         theType2 = strToType(aType2);
 
@@ -81,6 +85,8 @@ tuple<Pokemon *, bool> findPokemon(string aPokeName)
     {
         isFind = true;
         finalTuple = make_tuple(totalPokeList[wantedPoke->second-1], isFind);
+        //print_pokemon(wantedPoke->second);
+        //cin.ignore();
     }
     else
     {

@@ -56,14 +56,6 @@ Trainer *bootMenu()
     return aTrainer;
 }
 
-/*if(newItsActivePokemon == itsActivePokemon)
-    {
-        cout << itsActivePokemon->getItsName() << " is already fighting!\n";
-    }
-    else
-    {
-        itsActivePokemon = newItsActivePokemon;
-    }*/
 void battleMenu(Trainer *aTrainer)
 {
 
@@ -144,6 +136,9 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
         if (!aTrainer->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
+
             cout << aTrainer->getItsName() << "!\n";
             aPoke->attack(aPoke2);
 
@@ -155,6 +150,8 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
         {
             if(!aTrainer2->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
+
                 cout << aTrainer2->getItsName() << "!\n";
                 aPoke2->attack(aPoke);
 
@@ -166,6 +163,9 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
     else
     {
         if(!aTrainer2->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
+
             cout << aTrainer2->getItsName() << "!\n";
             aPoke2->attack(aPoke);
 
@@ -177,6 +177,8 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2)
         {
             if (!aTrainer->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
+
                 cout << aTrainer->getItsName() << "!\n";
                 aPoke->attack(aPoke2);
 
@@ -195,6 +197,9 @@ void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
         if (!aTrainer->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
+
             cout << aTrainer->getItsName() << "!\n";
             aPoke->attack(aPoke2);
 
@@ -206,6 +211,8 @@ void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
         {
             if(!aTrainer2->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
+
                 cout << aTrainer2->getItsName() << "!\n";
                 aTrainer2->AIattack();
 
@@ -217,6 +224,9 @@ void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
     else
     {
         if(!aTrainer2->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
+
             cout << aTrainer2->getItsName() << "!\n";
             aTrainer2->AIattack();
 
@@ -228,6 +238,8 @@ void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2)
         {
             if (!aTrainer->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
+
                 cout << aTrainer->getItsName() << "!\n";
                 aPoke->attack(aPoke2);
 
@@ -247,8 +259,15 @@ void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
     if(aPoke->getItsSpeed() > aPoke2->getItsSpeed())
     {
         if (!aTrainer->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
             cout << aTrainer->getItsName() << "!\n";
             aTrainer->AIattack();
+
+            cout << "\n";
+            aTrainer->displayTeam();
+            cout << "\n";
+            aTrainer->getItsOpponent()->displayTeam();
 
             cout << "\nPress Enter to continue!\n";
             cin.ignore();
@@ -258,8 +277,14 @@ void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
         {
             if(!aTrainer2->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
                 cout << aTrainer2->getItsName() << "!\n";
                 aTrainer2->AIattack();
+
+                cout << "\n";
+                aTrainer2->displayTeam();
+                cout << "\n";
+                aTrainer2->getItsOpponent()->displayTeam();
 
                 cout << "\nPress Enter to continue!\n";
                 cin.ignore();
@@ -269,8 +294,15 @@ void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
     else
     {
         if(!aTrainer2->getAlreadyFightSwap()){
+            clearScreen();
+            displayPokemonVSPokemon(aPoke, aPoke2);
             cout << aTrainer2->getItsName() << "!\n";
             aTrainer2->AIattack();
+
+            cout << "\n";
+            aTrainer2->displayTeam();
+            cout << "\n";
+            aTrainer2->getItsOpponent()->displayTeam();
 
             cout << "\nPress Enter to continue!\n";
             cin.ignore();
@@ -280,8 +312,14 @@ void firstPokeToAttack2AI(AI *aTrainer, AI *aTrainer2)
         {
             if (!aTrainer->getAlreadyFightSwap()){
                 clearScreen();
+                displayPokemonVSPokemon(aPoke, aPoke2);
                 cout << aTrainer->getItsName() << "!\n";
                 aTrainer->AIattack();
+
+                cout << "\n";
+                aTrainer->displayTeam();
+                cout << "\n";
+                aTrainer->getItsOpponent()->displayTeam();
 
                 cout << "\nPress Enter to continue!\n";
                 cin.ignore();
@@ -357,21 +395,23 @@ void battleSequence1AI(Trainer *aTrainer, AI *aTrainer2)
         if (!aPoke2->isAlive()){
             aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
         }
-        cout << "[" << aTrainer->getItsActivePokemon()->getItsName() << "] vs [" << aTrainer2->getItsActivePokemon()->getItsName() << "]\n";
-        clearScreen();
-        //cout << "[" << aTrainer2->getItsActivePokemon()->getItsName() << "]" << endl;
+        //cout << "[" << aTrainer->getItsActivePokemon()->getItsName() << "] vs [" << aTrainer2->getItsActivePokemon()->getItsName() << "]\n";
+
         do
         {
+            clearScreen();
+            displayPokemonVSPokemon(aTrainer->getItsActivePokemon(), aTrainer2->getItsActivePokemon());
             aTrainer->setAlreadyFightSwap(false);
             aTrainer2->setAlreadyFightSwap(false);
 
-            cout << "[" << aTrainer->getItsActivePokemon()->getItsName() << "] vs [" << aTrainer2->getItsActivePokemon()->getItsName() << "]\n";
+
             battleMenu(aTrainer);
             //aTrainer2->setItsActivePokemon(aTrainer2->bestPokemon());
 
-
             aPoke = aTrainer->getItsActivePokemon();
             aPoke2 = aTrainer2->getItsActivePokemon();
+
+
 
             firstPokeToAttack1AI(aTrainer, aTrainer2);
 
@@ -431,6 +471,7 @@ void battleSequence2AI(AI *aTrainer, AI *aTrainer2)
 
 void losingTrainer(Trainer *aTrainer, Trainer *aTrainer2)
 {
+    clearScreen();
     if ( aTrainer->isTeamKO()){
         cout << aTrainer->getItsName() << " is out of usable Pokemon!\n"
              << aTrainer2->getItsName() << " has won!";
@@ -444,3 +485,121 @@ void losingTrainer(Trainer *aTrainer, Trainer *aTrainer2)
 }
 
 
+
+void displayPokemonVSPokemon(Pokemon *aPoke, Pokemon *aPoke2)
+{
+    string tempOutput, tempOutput2;
+
+    map<string, unsigned int> indexPoke2 = indexPokeList();
+
+    auto wantedPoke = indexPoke2.find(aPoke->getItsName()),
+            wantedPoke2 = indexPoke2.find(aPoke2->getItsName());
+
+    std::ifstream inFile("../PokeAscii/"+to_string(wantedPoke->second)+".txt"),
+            inFile2("../PokeAscii/"+to_string(wantedPoke2->second)+".txt");
+
+    int numberOfLine1 = 0, numberOfLine2 = 0, max1 = 0, max2 = 0, temp;
+    std::string unused;
+    while ( !inFile.eof() )
+    {
+        getline(inFile,unused);
+        temp = unused.length();
+        max1 = max(temp, max1);
+       ++numberOfLine1;
+    }
+    while ( !inFile2.eof() )
+    {
+        getline(inFile2,unused);
+        temp = unused.length();
+        max2 = max(temp, max2);
+       ++numberOfLine2;
+    }
+    inFile.clear();
+    inFile2.clear();
+    inFile.seekg(0,ios::beg);
+    inFile2.seekg(0,ios::beg);
+
+
+    for(int i = 0; i<max(numberOfLine1, numberOfLine2); i++)
+    {
+        getline(inFile, tempOutput);
+        getline(inFile2, tempOutput2);
+        if(numberOfLine1 > numberOfLine2)
+        {
+            cout << tempOutput;
+            nbBlank(max1-tempOutput.length());
+            cout << "\t\t\t\t" << tempOutput2 << endl;
+        }
+        else
+        {
+            cout << tempOutput2;
+            nbBlank(max2-tempOutput2.length());
+            cout << "\t\t\t\t" << tempOutput << endl;
+        }
+    }
+
+
+
+    if(numberOfLine1 > numberOfLine2)
+    {
+        //first poke
+        nbBlank(max1/3);
+        cout << aPoke->getItsName() << " [" << typeToStr(aPoke->getItsType()) << "] ";
+        if(aPoke->getItsType() != aPoke->getItsType2())
+            cout << "[" << typeToStr(aPoke->getItsType2()) << "]";
+
+        //second poke
+        nbBlank(max1/2+max2/3);
+        cout << aPoke2->getItsName() << " [" << typeToStr(aPoke2->getItsType()) << "] ";
+        if(aPoke2->getItsType() != aPoke2->getItsType2())
+            cout << "[" << typeToStr(aPoke2->getItsType2()) << "]";
+    }
+    else
+    {
+        //second poke
+        nbBlank(max2/3);
+        cout << aPoke2->getItsName() << " [" << typeToStr(aPoke2->getItsType()) << "] ";
+        if(aPoke2->getItsType() != aPoke2->getItsType2())
+            cout << "[" << typeToStr(aPoke2->getItsType2()) << "]";
+
+        //first poke
+        nbBlank(max2/2+max1/3);
+        cout << aPoke->getItsName() << " [" << typeToStr(aPoke->getItsType()) << "] ";
+        if(aPoke->getItsType() != aPoke->getItsType2())
+            cout << "[" << typeToStr(aPoke->getItsType2()) << "]";
+    }
+    cout << endl;
+
+
+    //print_pokemon(wantedPoke->second);
+
+    if(numberOfLine1 > numberOfLine2)
+        nbBlank(max1);
+    else
+        nbBlank(max2);
+    cout <<   "  888  888 .d8888b  \n";
+    if(numberOfLine1 > numberOfLine2)
+        nbBlank(max1);
+    else
+        nbBlank(max2);
+    cout << "  888  888 88K      \n";
+    if(numberOfLine1 > numberOfLine2)
+        nbBlank(max1);
+    else
+        nbBlank(max2);
+    cout <<      "  Y88  88P \"Y8888b. \n";
+    if(numberOfLine1 > numberOfLine2)
+        nbBlank(max1);
+    else
+        nbBlank(max2);
+       cout <<     "   Y8bd8P       X88 \n";
+    if(numberOfLine1 > numberOfLine2)
+        nbBlank(max1);
+    else
+        nbBlank(max2);
+       cout << "    Y88P    88888P' \n\n";
+
+    //print_pokemon(wantedPoke->second);
+    inFile.close();
+    inFile2.close();
+}

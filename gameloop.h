@@ -3,7 +3,6 @@
 
 #include "ai.h"
 #include "trainer.h"
-
 int versusMenu();
 
 Trainer *bootMenu();
@@ -23,8 +22,11 @@ void firstPokeToAttack(Trainer *aTrainer, Trainer *aTrainer2);
 void firstPokeToAttack1AI(Trainer *aTrainer, AI *aTrainer2);
 void firstPokeToAttack1AI(AI *aTrainer, AI *aTrainer2);
 
+void displayPokemonVSPokemon(Pokemon *aPoke, Pokemon *aPoke2);
 
 void hasFaintedPoke(Pokemon *aPoke, Trainer *aTrainer);
+
+
 
 void clearScreen();
 #endif // GAMELOOP_H
