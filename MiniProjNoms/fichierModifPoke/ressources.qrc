@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>listePStats.txt</file>
+        <file>listFinalP.txt</file>
+        <file>pokeENNames.txt</file>
+        <file>pokemonWithTypes.txt</file>
+    </qresource>
+</RCC>
